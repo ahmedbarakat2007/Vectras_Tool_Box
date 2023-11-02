@@ -36,35 +36,38 @@ def drivers():
     italia.iconbitmap("Textures\icon.ico")
     italia.title("Loading Drivers")
 
-    def bar(): 
-        italia.configure(bg="#202125")
-        progress['value'] = 20
-        italia.update_idletasks() 
-        time.sleep(1) 
-  
-        progress['value'] = 40
-        italia.update_idletasks() 
-        time.sleep(1) 
-  
-        progress['value'] = 50
-        italia.update_idletasks() 
-        time.sleep(1) 
-  
-        progress['value'] = 60
-        italia.update_idletasks() 
-        time.sleep(1) 
-  
-        progress['value'] = 80
-        italia.update_idletasks() 
-        time.sleep(1) 
-        progress['value'] = 100
-        close()
+    def bar():
         try:
             response = requests.get("https://raw.githubusercontent.com/epicstudios856/Vectras-windows-emulator/main/store_list.json", timeout=5)
             os.system('python tools.py')
+            italia.configure(bg="#202125")
+            progress['value'] = 20
+            italia.update_idletasks() 
+            time.sleep(1) 
+  
+            progress['value'] = 40
+            italia.update_idletasks() 
+            time.sleep(1) 
+  
+            progress['value'] = 50
+            italia.update_idletasks() 
+            time.sleep(1) 
+  
+            progress['value'] = 60
+            italia.update_idletasks() 
+            time.sleep(1) 
+  
+            progress['value'] = 80
+            italia.update_idletasks() 
+            time.sleep(1) 
+            progress['value'] = 100
+            close()
             root.destroy()
         except requests.ConnectionError:
             msg = messagebox.showerror('ERROR', 'Connection not found!!')
+            close()
+        
+        
         
     
     Label(italia, text = "",bg="#202125", foreground="white").pack()

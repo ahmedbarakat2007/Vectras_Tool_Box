@@ -1,6 +1,8 @@
+import tkinter as Tk
 import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import showinfo
+from tkinter import messagebox
 import json
 import requests
 import webbrowser
@@ -14,8 +16,9 @@ from urllib.request import urlopen
 from tkinter import *
 import os
 
+
 # create the root window
-root = tk.Tk()
+root = Tk()
 root.geometry('920x566')
 root.resizable(0,0)
 root.title('Tools')
@@ -54,41 +57,69 @@ def item_selected(event):
         filename = values[3]
         link = values[4]
         icon = values[5]
+        
 
-        def download():
-            urlretrieve(link, filename)
-            bb = os.path.exist('c:/installed')
-            if ( bb == True):
-                shutil.move(filename, "c:/installed")
+    def download():  # Add m3 as a paramete
+        def close_loading():
+            if (m3.winfo_ismapped() == True):
+                m3.destroy()
+
+        def donothing():
+            pass          
+
+        m3 = tk.Tk()
+        m3.geometry('250x100')
+        m3.resizable(0,0)
+        m3.iconbitmap("Textures\icon.ico")
+        m3.protocol('WM_DELETE_WINDOW',donothing)
+        m3.configure(bg="#202125")
+        m3.title('DownLoading...')
+        Label(m3,bg="#1f242b").pack()
+        Label(m3, text='Downloading'+ name +'....',bg="#1f242b",fg='black', font='san-serif 14 bold').pack()
+        msg1 = messagebox.askyesno('Info', 'Are You Sure You Want To Install ' + name)
+        if msg1:
+            if(os.path.isfile("c:/Installed/" + filename) == False):
+                urlretrieve(link, filename)
+                bb = os.path.isdir('c:/Installed')
+                if ( bb == True):
+                    shutil.move(filename, "c:/Installed")
+                    
+                    close_loading()
+                    msg = showinfo("Info", name + " Is Installed")
+                else:
+                    path = os.path.join("C:/", "Installed")
+                    os.mkdir(path) 
+                    shutil.move(filename, "c:/Installed")
+                    
+                    close_loading()
+                    msg = showinfo("Info", name + " Is Installed")
+
             else:
-                
+                close_loading()
+                msg = showinfo("Info", name + " Is Already Installed")
+        else:
+            close_loading()
+        m3.mainloop()  # Move this line here
+        
+        
+        
 
-            
-        '''with urllib.request.urlopen(icon) as u:
-            raw_data = u.read()
+    a7a = StringVar()
+    six = StringVar()
 
-        image = Image.open(io.BytesIO(raw_data))
-        photo = ImageTk.PhotoImage(image)
+    m3 = tk.Label(root, textvariable=a7a,bg="#202125", font='san-serif 16 bold', foreground="white")
+    m3.place(x=680, y=150)
 
-# Create a Label Widget to display the text or Image
-#https://a.fsdn.com/allura/p/sevenzip/icon?1513717482?&w=90
-        label = tk.Label(root, image = photo)
-        label.place(x=650,y=30)'''
-        a7a = StringVar()
-        six = StringVar()
-
-        m3 = tk.Label(root, textvariable=a7a,bg="#202125", font='san-serif 16 bold', foreground="white")
-        m3.place(x=680, y=150)
-
-        m4 = tk.Label(root, textvariable=six,bg="#202125", font='san-serif 10 bold', foreground="white")
-        m4.place(x=680, y=190)
+    m4 = tk.Label(root, textvariable=six,bg="#202125", font='san-serif 10 bold', foreground="white")
+    m4.place(x=680, y=190)
 
 # When you want to update the text
-        a7a.set("Name : " + name + "                           ")
-        six.set("Size : " + size + "                           ")
+    a7a.set("Name : " + name + "                           ")
+    six.set("Size : " + size + "                           ")
         
-        m5 = tk.Button(root,text='Download', font='san-serif 12 bold', bg='#0160c9',fg="white",borderwidth="0", padx=2,command=download)
-        m5.place(x=729,y=450)
+    m5 = tk.Button(root,text='Download', font='san-serif 12 bold', bg='#0160c9',fg="white",borderwidth="0", padx=2,command=download)
+    m5.place(x=729,y=450)
+        
         
 
 
