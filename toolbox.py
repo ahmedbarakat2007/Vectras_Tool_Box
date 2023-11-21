@@ -39,7 +39,7 @@ def drivers():
     def bar():
         try:
             response = requests.get("https://raw.githubusercontent.com/epicstudios856/Vectras-windows-emulator/main/store_list.json", timeout=5)
-            os.system('python tools.py')
+            os.startfile("tools.exe")
             italia.configure(bg="#202125")
             progress['value'] = 20
             italia.update_idletasks() 

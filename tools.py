@@ -8,7 +8,6 @@ import requests
 import webbrowser
 import shutil
 from urllib.request import urlretrieve
-from PIL import ImageTk, Image
 import urllib.request
 import io
 from io import BytesIO
@@ -92,7 +91,11 @@ def item_selected(event):
                     shutil.move(filename, "c:/Installed")
                     
                     close_loading()
-                    msg = showinfo("Info", name + " Is Installed")
+                    yesnt = messagebox.askokcancel("Info", name + " Is Installed,Do You Want to Open it?")
+                    if yesnt:
+                        os.startfile("c:/Installed/"+ filename)
+                    else:
+                        return False
 
             else:
                 close_loading()
